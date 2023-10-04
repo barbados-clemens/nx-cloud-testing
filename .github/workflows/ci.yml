@@ -10,6 +10,9 @@ jobs:
   main:
     name: Nx Cloud - Main Job
     uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.13.0
+    permissions:
+      contents: 'read'
+      actions: 'read'
     with:
       main-branch-name: main
       number-of-agents: 3
@@ -25,5 +28,8 @@ jobs:
   agents:
     name: Nx Cloud - Agents
     uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.13.0
+    permissions:
+      contents: 'read'
+      actions: 'read'
     with:
       number-of-agents: 3
