@@ -1,5 +1,8 @@
 name: CI
 
+env:
+  NX_VERBOSE_LOGGING: true
+
 on:
   push:
     branches:
@@ -18,9 +21,12 @@ jobs:
       number-of-agents: 3
       init-commands: |
         npx nx-cloud start-ci-run --stop-agents-after="build" --agent-count=3
+        echo "$NX_CI_EXECUTION_ID $NX_RUN_GROUP $NX_BRANCH $NX_CLOUD_DISTRIBUTED_EXECUTION"
       parallel-commands: |
         npx nx-cloud record -- npx nx format:check
+        echo "$NX_CI_EXECUTION_ID $NX_RUN_GROUP $NX_BRANCH $NX_CLOUD_DISTRIBUTED_EXECUTION"
       parallel-commands-on-agents: |
+        echo "$NX_CI_EXECUTION_ID $NX_RUN_GROUP $NX_BRANCH $NX_CLOUD_DISTRIBUTED_EXECUTION"
         npx nx affected --target=lint --parallel=3
         npx nx affected --target=test --parallel=3 --ci --code-coverage
         npx nx affected --target=build --parallel=3
